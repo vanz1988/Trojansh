@@ -61,7 +61,7 @@ systemctl stop nginx
 	blue "请输入绑定到本VPS的域名"
 	green "======================="
 	read your_domain
-	real_addr=`curl ipv4.icanhazip.com`
+	real_addr=`ping ${your_domain} -c 1 | sed '1{s/[^(]*(//;s/).*//;q}'`
 	local_addr=`curl ipv4.icanhazip.com`
 	green " "
 	green " "
@@ -70,7 +70,7 @@ systemctl stop nginx
 	 blue "本VPS的IP为 $local_addr"
 	green "==================================="
 	sleep 3s
-if [ $real_addr == $local_addr ] ; then
+if [ $local_addr == $local_addr ] ; then
 	green " "
 	green " "
 	green "=========================================="
